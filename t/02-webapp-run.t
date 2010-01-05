@@ -49,5 +49,8 @@ $mech->get_ok("?rm=geturl&longurl=another.very.long.url.here.is&shorturl=$u&fmt=
 $mech->content_contains("$domain/$u", "JSON OK");
 
 $mech->get_ok("?rm=redirect&url=$u" );
+
+$mech->get_ok("?rm=redirect&url=yaya");
+$mech->content_contains( 'Sorry', "Redirect error Ok");
 unlink $db_name;
 

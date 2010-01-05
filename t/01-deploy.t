@@ -1,5 +1,8 @@
 #!perl 
 
+use strict;
+use warnings;
+
 use Test::More qw( no_plan ); #Random initial string...
 use lib qw( lib ../lib ../../lib  ); #Just in case we are testing it in-place
 
@@ -20,10 +23,13 @@ is( $#all_urls, 0, "Length OK" );
 is( $all_urls[0]->long_url, $long, "Result long retrieved" );
 is( $all_urls[0]->short_url, $short, "Result short retrieved" );
 my @valid_urls = qw( a aa aaa abcd ABCD AB_CD ABcdD _az_ );
+
 push @valid_urls, "abcde_rst_uvwxyz";
 
+my %used_urls;
 for my $u ( @valid_urls ) {
   is( Net::Lujoyglamour::is_valid( $u), 1, "Valid URL $u" );
+  $used_urls{$u} = 1;
 }
 
 my @invalid_urls = ( "a"x($Net::Lujoyglamour::short_url_size +1),
@@ -36,7 +42,11 @@ for my $u (@invalid_urls ) {
 }
 
 for (1..100) {
-  my $candidate = $schema->generate_candidate_url;
+  my $candidate;
+  do {
+      $candidate = $schema->generate_candidate_url
+  } while $used_urls{$candidate};
+  $used_urls{$candidate} = 1;
   like( $candidate, qr/[$Net::Lujoyglamour::valid_short_urls]+/, "Candidate $candidate OK" );
   my $long_url = "this.is.a.long.url/".rand(1e6);
   $new_url =  $rs_url->new({ short => $candidate,
@@ -52,7 +62,7 @@ for (1..100 ) {
   like( $short_url, qr/[$Net::Lujoyglamour::valid_short_urls]+/, "Generated $short_url for $long_url OK" );
 }
 
-my @wanted = qw( this is what like );
+my @wanted = qw( this going what like );
 for my $w (@wanted ) {
   my $long_url = "this.is.a.longer.url/".rand(1e6);
   my $short_url = $schema->create_new_short( $long_url, $w );

@@ -1,19 +1,10 @@
-Net-Lujoyglamour version 0.0.1
+Net-Lujoyglamour version 0.0.2
 
-[ REPLACE THIS...
-
-  The README is used to introduce the module and provide instructions on
-  how to install the module, any machine dependencies it may have (for
-  example C compilers and installed libraries) and any other information
-  that should be understood before the module is installed.
-
-  A README file is required for CPAN modules since CPAN extracts the
-  README file from a module distribution so that people browsing the
-  archive can use it get an idea of the modules uses. It is usually a
-  good idea to provide version information here so that people can
-  decide whether fixes for the module are worth downloading.
-]
-
+If you happen to be at the same time a CPAN and a novel author, and
+the novel happens to be called a CPAN-module-name-able title, it's a
+slam dunk to write a module that is called more or less like the
+novel. If the module can help promoting the novel, so much the
+better. 
 
 INSTALLATION
 
@@ -25,14 +16,16 @@ To install this module, run the following commands:
 	make install
 
 
+
 DEPENDENCIES
 
-None.
+Those written in Makefile plus the database drivers for the one you
+use. 
 
 
 COPYRIGHT AND LICENCE
 
-Copyright (C) 2009, JJ Merelo
+Copyright (C) 2009, 2010 JJ Merelo
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

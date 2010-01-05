@@ -11,4 +11,10 @@ t/02-webapp.t
 t/02-webapp-run.t
 t/form.html
 t/geturl.html
+t/redirect.html
+app/lg-deploy
+app/lg.cgi
+app/form.html
+app/geturl.html
+app/redirect.html
 META.yml                                 Module meta-data (added by MakeMaker)

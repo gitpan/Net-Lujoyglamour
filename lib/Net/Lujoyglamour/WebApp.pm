@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-our $VERSION =   sprintf "%d.%03d", q$Revision: 1.6 $ =~ /(\d+)\.(\d+)/g; 
+our $VERSION =   sprintf "%d.%03d", q$Revision: 1.7 $ =~ /(\d+)\.(\d+)/g; 
 
 use lib qw( ../../../lib ../../lib 
  /home/jmerelo/proyectos/CPAN/Net-Lujoyglamour/lib/); #Just in case we are testing it in-place
@@ -31,8 +31,8 @@ sub cgiapp_init  {
 		      $params{'username'}, 
 		      $params{'auth'});
     $self->dbic_config({schema => Net::Lujoyglamour->connect( $params{'dsn'}, 
-							     $params{'username'}, 
-							     $params{'auth'})});
+							      $params{'username'}, 
+							      $params{'auth'})});
 }
 
 
@@ -93,7 +93,14 @@ sub redirect_url {
     my $self   = shift;
     my $url    = $self->query->param('url');
     my $long_url = $self->schema->resultset('Url')->single({short => $url});
-    return $self->redirect("http://".$long_url->long_url );
+    if ( $long_url ) {
+	return $self->redirect("http://".$long_url->long_url );
+    } else {
+	my $tmpl = $self->load_tmpl;
+	$tmpl->param( domain => $self->param('domain'),
+		      shorturl => $url );
+	return $tmpl->output;
+    }
 
 }
 
