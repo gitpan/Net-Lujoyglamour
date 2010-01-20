@@ -2,6 +2,7 @@ Changes
 MANIFEST
 Makefile.PL
 README
+TODO
 lib/Net/Lujoyglamour.pm
 lib/Net/Lujoyglamour/WebApp.pm
 lib/Net/Lujoyglamour/Result/Url.pm

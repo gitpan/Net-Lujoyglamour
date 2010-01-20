@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-use version; our $VERSION = qv('0.0.2');
+use version; our $VERSION = qv('0.0.3');
 
 use base qw/DBIx::Class::Schema Exporter/;
 
@@ -22,7 +22,10 @@ __PACKAGE__->load_namespaces();
 sub create_new_short {
     my $schema = shift;
     my $long_url = shift || croak "What? No URL?\n";
-    croak "Invalid URL $long_url" if ( "http://$long_url" !~ $RE{'URI'}{'HTTP'} );
+    if ( $long_url =~ m{^http://(.+)} ) {
+      $long_url = $1;
+    }
+    croak "Invalid URL $long_url" if ( "http://$long_url" !~ /$RE{'URI'}{'HTTP'}/ );
     my $want_short = shift;
     my $url_rs = $schema->resultset('Url');
     
@@ -47,7 +50,11 @@ sub create_new_short {
     } else {
 	$short_url = $short_url->short_url
     }
-    return $short_url;
+    if ( $short_url ) {
+      return $short_url;
+    } else {
+      croak "Something along the way went wrong, no short URL obtained";
+    }
     
 }
 
@@ -172,6 +179,15 @@ Please report any bugs or feature requests to
 C<bug-net-lujoyglamour@rt.cpan.org>, or through the web interface at
 L<http://rt.cpan.org>.
 
+=head1 SEE ALSO
+
+The module is used with a SQLite database at the site L<<a
+href="http://lugl.info/">http://lugl.info/</a>>. Any comments and
+suggestions are welcome. 
+
+Other URL shortening modules you might want to check out are
+L<CGI::Shorten>, L<WWW::Shorten::MakeAShorterLink> and L<WWW::Shorten>, which is rather an interface for
+available URL shortening services.
 
 =head1 AUTHOR
 

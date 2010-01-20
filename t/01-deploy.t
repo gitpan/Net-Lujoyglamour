@@ -56,16 +56,25 @@ for (1..100) {
   is( $url->long_url, $long_url, "Got $long_url back" );
 }
 
+my $short_url;
 for (1..100 ) {
   my $long_url = "this.is.a.long.url/".rand(1e6);
-  my $short_url = $schema->create_new_short( $long_url );
+  $short_url = $schema->create_new_short( $long_url );
   like( $short_url, qr/[$Net::Lujoyglamour::valid_short_urls]+/, "Generated $short_url for $long_url OK" );
 }
 
+my @real_urls = ( "http://lujoyglamour.tumblr.com/post/237071159/pjorge-muy-interesante-y-divertido-lujoyglamour-net",
+		  "http://hardware.slashdot.org/story/10/01/15/028201/Robotics-Prof-Fears-Rise-of-Military-Robots?art_pos=3",
+		  "http://www.lujoyglamour.es/2010/01/15/unos-cuantos-libros/" );
+
+for my $r (@real_urls) {
+   $short_url = $schema->create_new_short( $r );
+   is( $short_url ne '', 1 , "Getting $short_url for $r");
+}
 my @wanted = qw( this going what like );
 for my $w (@wanted ) {
   my $long_url = "this.is.a.longer.url/".rand(1e6);
-  my $short_url = $schema->create_new_short( $long_url, $w );
+  $short_url = $schema->create_new_short( $long_url, $w );
   is( $short_url, $w, "Getting $w for $long_url");
 }
 
@@ -78,3 +87,6 @@ eval {
     $schema->create_new_short('!!!noURLhere!!!', "whatever");
 };
 like( $@, qr/URL/, "URL Error OK");
+
+$short_url =  $schema->create_new_short('http://this.is.it', "whatever");
+like( $short_url, qr/[$Net::Lujoyglamour::valid_short_urls]+/, "Generated $short_url from shaved URL OK" );

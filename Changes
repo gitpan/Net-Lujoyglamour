@@ -1,3 +1,13 @@
+2010-01-20    <jmerelo@localhost.localdomain>
+
+	* Makefile.PL: Main changes are in documentation; mainly released
+	to get test done again due to re-release of
+	CGI::Applicacion::Plugin::DBIx::Class .
+
+2010-01-06    <jmerelo@localhost.localdomain>
+
+	* MANIFEST: 0.0.3 starts with a new TODO file. 
+
 2010-01-01  Juan J. Merelo  <jmerelo@vega>
 
 	* MANIFEST: 0.0.2 tries to fix some errors and add app code. 

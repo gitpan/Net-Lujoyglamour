@@ -1,0 +1,5 @@
+* Test with mysql or other DBs
+* Add JS for easy/fast creation
+* Extend to other protocols
+* Take extensions into account
+* Write a WWW::Shorten module which uses the lugl.info interface
