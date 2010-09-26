@@ -90,3 +90,7 @@ like( $@, qr/URL/, "URL Error OK");
 
 $short_url =  $schema->create_new_short('http://this.is.it', "whatever");
 like( $short_url, qr/[$Net::Lujoyglamour::valid_short_urls]+/, "Generated $short_url from shaved URL OK" );
+
+$short_url = $schema->create_new_short('http://this.is.it', "another");
+like( $short_url, qr/[$Net::Lujoyglamour::valid_short_urls]+/, "Generated $short_url instead of another" );
+

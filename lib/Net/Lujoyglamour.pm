@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-use version; our $VERSION = qv('0.0.3');
+use version; our $VERSION = qv('0.0.3.1');
 
 use base qw/DBIx::Class::Schema Exporter/;
 
@@ -53,7 +53,7 @@ sub create_new_short {
     if ( $short_url ) {
       return $short_url;
     } else {
-      croak "Something along the way went wrong, no short URL obtained";
+      croak "Something along the way went wrong, no short URL obtained for $long_url";
     }
     
 }
@@ -87,7 +87,7 @@ Net::Lujoyglamour - Create short URLs with luxury and glamour
 
 =head1 VERSION
 
-This document describes Net::Lujoyglamour version 0.0.1
+This document describes Net::Lujoyglamour version 0.0.3
 
 
 =head1 SYNOPSIS
@@ -109,10 +109,12 @@ This document describes Net::Lujoyglamour version 0.0.1
 =head1 DESCRIPTION
 
 Model/Control part of a framework intended for creating short
-    URLs. Inherits from L<DBIx::Class>, and adds functionality for
+    URLs. Inherits from L<DBIx::Class>; adds functionality for
     creating a keeping a table of long/short URLs. Funky name comes
-    from the novel C<lujoyglamour.net>, in Spanish, which I also
-    wrote, and you can check out at L<http://lujoyglamour.es>. 
+    from the novel C< lujoyglamour.net >, in Spanish, which I also
+    wrote (and obtained a literary price), and you can check out at
+    L<http://lujoyglamour.es> or buy at
+    L<http://compra.lujoyglamour.net>. 
 
 =head1 INTERFACE 
     
@@ -127,12 +129,13 @@ Also inherited, used for creating the database from the schema
 
 =head2 is_valid( $string )
 
-Check for requested short URL validity; alphanumeric characters are
-    allowed only
+Check for requested short URL validity; only alphanumeric characters
+    are allowed 
 
 =head2 generate_candidate_url
 
-Generates a random URL 
+Generates a random URL with the character limitation set. It checks
+    URLs with increasing size, until it finds one.
 
 =head2 create_new_short ( $long_url[, $short_url] )
 
@@ -145,7 +148,9 @@ Creates and inserts into the database a new short URL, optionally
 
 =item C<< Url space exhausted!! >> 
 
-No more URLs availables. You probably have a very successful site
+No more URLs availables. You probably have a very successful URL shortener site. 
+You already used up all available short addresses. Time to expand your
+    database!
 
 =item C<< Invalid short URL $want_short >>
 
@@ -181,13 +186,15 @@ L<http://rt.cpan.org>.
 
 =head1 SEE ALSO
 
-The module is used with a SQLite database at the site L<<a
-href="http://lugl.info/">http://lugl.info/</a>>. Any comments and
+The module is used with a SQLite database at the site L<http://lugl.info/>. Any comments and
 suggestions are welcome. 
 
 Other URL shortening modules you might want to check out are
 L<CGI::Shorten>, L<WWW::Shorten::MakeAShorterLink> and L<WWW::Shorten>, which is rather an interface for
 available URL shortening services.
+
+There is an example app at the aptly named C< app > directory,
+    retrieve it from your CPAN directory or from the CPAN website.
 
 =head1 AUTHOR
 
