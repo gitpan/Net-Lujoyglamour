@@ -66,7 +66,7 @@ sub get_url {
     };
     my $format = $self->query->param('fmt') || '';
     if ( $format eq '' ) {
-	if ($new_short_url) {
+	if ($new_short_url ne '') {
 	    $tmpl->param( short => $self->param('domain')."/".$new_short_url,
 			  long => $long_url );
 	} else {
@@ -75,7 +75,7 @@ sub get_url {
 	return $tmpl->output;
     } elsif ( $format eq 'JSON' ) {
 	my $json;
-	if ($new_short_url) {
+	if ($new_short_url ne '') {
 	    $json = to_json( { short =>  $self->param('domain')."/".$new_short_url,
 			       long => $long_url} );
 	} else {

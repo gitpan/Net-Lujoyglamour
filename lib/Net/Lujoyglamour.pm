@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-use version; our $VERSION = qv('0.0.3.1');
+use version; our $VERSION = qv('0.0.3.2');
 
 use base qw/DBIx::Class::Schema Exporter/;
 
@@ -50,7 +50,7 @@ sub create_new_short {
     } else {
 	$short_url = $short_url->short_url
     }
-    if ( $short_url ) {
+    if ( $short_url ne '' ) {
       return $short_url;
     } else {
       croak "Something along the way went wrong, no short URL obtained for $long_url";
@@ -74,6 +74,9 @@ sub generate_candidate_url {
     if ( $i > $short_url_size ) { 
 	croak "Url space exhausted!!";
     }
+    if ( $candidate_url eq '' ) {
+	croak "Couldn't generate a candidate URL!"
+    }
     return $candidate_url;
 }
 
@@ -87,7 +90,7 @@ Net::Lujoyglamour - Create short URLs with luxury and glamour
 
 =head1 VERSION
 
-This document describes Net::Lujoyglamour version 0.0.3
+This document describes Net::Lujoyglamour version 0.0.3.1
 
 
 =head1 SYNOPSIS

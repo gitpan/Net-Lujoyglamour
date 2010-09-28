@@ -9,7 +9,7 @@ my $dsn = 'dbi:SQLite:dbname=:memory:';
 
 my $this_dir = $ENV{'PWD'};
 my $template_dir;
-if ( $this_dir =~ /t$/ || $this_dir =~ m{/t/$} ) {
+if ( ($this_dir =~ /t$/) || ($this_dir =~ m{/t/$}) ) {
     $template_dir = $this_dir;
 } else {
     $template_dir= "$this_dir/t";
