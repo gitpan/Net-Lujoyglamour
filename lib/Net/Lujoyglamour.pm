@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-use version; our $VERSION = qv('0.0.3.2');
+use version; our $VERSION = qv('0.0.3.3');
 
 use base qw/DBIx::Class::Schema Exporter/;
 

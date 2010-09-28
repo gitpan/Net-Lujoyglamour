@@ -1,3 +1,9 @@
+2010-09-28  Juan J. Merelo  <jmerelo@sheldon>
+
+	* lib/Net/Lujoyglamour.pm: Added more tests for correctly loaded templates
+
+	* lib/Net/Lujoyglamour/WebApp.pm (get_url): Revised short_url error checking, to avoid problems when URL generated is "0". Upgraded for 0.0.3.2
+
 2010-09-26  Juan J. Merelo  <jmerelo@sheldon>
 
 	*  (Warning): Fixed some docs, and added tests to avoid test FAILs in 0.0.3

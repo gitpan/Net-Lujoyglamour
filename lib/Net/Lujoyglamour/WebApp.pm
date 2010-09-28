@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-our $VERSION =   sprintf "%d.%03d", q$Revision: 1.7 $ =~ /(\d+)\.(\d+)/g; 
+our $VERSION =   sprintf "%d.%03d", q$Revision: 1.8 $ =~ /(\d+)\.(\d+)/g; 
 
 use lib qw( ../../../lib ../../lib 
  /home/jmerelo/proyectos/CPAN/Net-Lujoyglamour/lib/); #Just in case we are testing it in-place
@@ -50,7 +50,11 @@ sub setup {
 
 sub show_form {
     my $self = shift;
-    my $tmpl = $self->load_tmpl;
+    my $tmpl;
+    eval {
+	$tmpl = $self->load_tmpl;
+    };
+    croak( "Can't load template from ".$self->{'__TMPL_PATH'}.". Error $@\n" ) if $@;
     $tmpl->param( domain => $self->param('domain') );
     return $tmpl->output;
 }
