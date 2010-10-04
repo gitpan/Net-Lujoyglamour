@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-use version; our $VERSION = qv('0.0.3.3');
+use version; our $VERSION = qv('0.0.4');
 
 use base qw/DBIx::Class::Schema Exporter/;
 
@@ -30,22 +30,20 @@ sub create_new_short {
     my $url_rs = $schema->resultset('Url');
     
     if ( $want_short ) { 
-	my $is_there_long = $url_rs->single( { short => $want_short } );
+	my $is_there_long = $url_rs->single( { shortu => $want_short } );
 	croak "Short URL $want_short already in use" if $is_there_long;
     }
-    my $short_url = $url_rs->single( { long => $long_url } );
+    my $short_url = $url_rs->single( { longu => $long_url } );
     if ( !$short_url ) { # Doesn't exist, create
 	my $new_pair;
 	if ( $want_short ) {
 	    croak "Invalid short URL $want_short" if !is_valid($want_short);
 	    $short_url = $want_short;
-	    $new_pair = $url_rs->new( { short => $want_short,
-					long => $long_url } );
 	} else {
 	    $short_url = $schema->generate_candidate_url;
-	    $new_pair = $url_rs->new( { short => $short_url,
-					long => $long_url } );
 	}
+	$new_pair = $url_rs->new( { shortu => $short_url,
+				     longu => $long_url } );
 	$new_pair->insert;
     } else {
 	$short_url = $short_url->short_url
@@ -70,7 +68,7 @@ sub generate_candidate_url {
     my $i = 1;
     do {
 	$candidate_url = random_regex($equivalent_pattern.'{1,'.$i.'}');	
-    } while ( $url_rs->find( { short => $candidate_url } ) && ($i++ <= $short_url_size ) );
+    } while ( $url_rs->find( { shortu => $candidate_url } ) && ($i++ <= $short_url_size ) );
     if ( $i > $short_url_size ) { 
 	croak "Url space exhausted!!";
     }
@@ -90,8 +88,7 @@ Net::Lujoyglamour - Create short URLs with luxury and glamour
 
 =head1 VERSION
 
-This document describes Net::Lujoyglamour version 0.0.3.1
-
+This document describes Net::Lujoyglamour version 0.0.4
 
 =head1 SYNOPSIS
 
@@ -189,8 +186,10 @@ L<http://rt.cpan.org>.
 
 =head1 SEE ALSO
 
-The module is used with a SQLite database at the site L<http://lugl.info/>. Any comments and
-suggestions are welcome. 
+The module is used with a SQLite database at the site
+    L<http://lugl.info/>, and with MySQL at L<http://l-g.me> (in
+    Spanish). Any comments and suggestions are welcome. If you decide
+    to run your URL shortener on this, please let me know
 
 Other URL shortening modules you might want to check out are
 L<CGI::Shorten>, L<WWW::Shorten::MakeAShorterLink> and L<WWW::Shorten>, which is rather an interface for
@@ -199,14 +198,18 @@ available URL shortening services.
 There is an example app at the aptly named C< app > directory,
     retrieve it from your CPAN directory or from the CPAN website.
 
+=head1 ACKNOWLEDGEMENTS
+
+CPANTS tester Sebastian Woetzel helped me fix a bug in my tests
+    scripts. 
+
 =head1 AUTHOR
 
 JJ Merelo  C<< <jj@merelo.net> >>
 
-
 =head1 LICENCE AND COPYRIGHT
 
-Copyright (c) 2009, JJ Merelo C<< <jj@merelo.net> >>. All rights reserved.
+Copyright (c) 2009, 2010, JJ Merelo C<< <jj@merelo.net> >>. All rights reserved.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.

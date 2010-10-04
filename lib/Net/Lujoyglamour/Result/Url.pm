@@ -4,28 +4,28 @@ use warnings;
 use strict;
 use Carp;
 
-our $VERSION =   sprintf "%d.%03d", q$Revision: 1.4 $ =~ /(\d+)\.(\d+)/g; 
+our $VERSION =   sprintf "%d.%03d", q$Revision: 1.5 $ =~ /(\d+)\.(\d+)/g; 
 
 use base qw/DBIx::Class::Core/;
 
 __PACKAGE__->table('short_url');
-__PACKAGE__->add_columns(long =>
+__PACKAGE__->add_columns(longu =>
 			 { accessor  => 'long_url',
-			   data_type => 'varchar',
+			   data_type => 'VARCHAR',
 			   size      => 255,
 			   is_nullable => 0,
 			   is_auto_increment => 0
 			 },
-                          short =>
+                          shortu =>
 			 { accessor => 'short_url',
-			   data_type => 'varchar',
+			   data_type => 'VARCHAR',
 			   size      => $Net::Lujoyglamour::short_url_size,
 			   is_nullable => 0,
 			   is_auto_increment => 0
 			 }
                          );
 
-__PACKAGE__->set_primary_key( qw/ short long/ );
+__PACKAGE__->set_primary_key( qw/ shortu longu/ );
 
 
 "lujo and glamour all over again"; # Magic true value required at end of module

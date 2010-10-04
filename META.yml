@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Net-Lujoyglamour
-version:            0.0.3.3
+version:            0.0.4
 abstract:           Create short URLs with luxury and glamour
 author:
     - JJ Merelo <jj@merelo.net>

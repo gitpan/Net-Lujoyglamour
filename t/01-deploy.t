@@ -15,8 +15,8 @@ $schema->deploy({ add_drop_tables => 1});
 my $short = 1;
 my $long = "uno.com/";
 my $rs_url = $schema->resultset('Url');
-my $new_url = $rs_url->new({ short => $short,
-			     long => $long});
+my $new_url = $rs_url->new({ shortu=> $short,
+			     longu => $long});
 $new_url->insert;
 my @all_urls = $rs_url->all;
 is( $#all_urls, 0, "Length OK" );
@@ -49,10 +49,10 @@ for (1..100) {
   $used_urls{$candidate} = 1;
   like( $candidate, qr/[$Net::Lujoyglamour::valid_short_urls]+/, "Candidate $candidate OK" );
   my $long_url = "this.is.a.long.url/".rand(1e6);
-  $new_url =  $rs_url->new({ short => $candidate,
-			       long => $long_url});
+  $new_url =  $rs_url->new({ shortu=> $candidate,
+			       longu => $long_url});
   $new_url->insert;
-  my $url = $rs_url->single( { short => $candidate } );
+  my $url = $rs_url->single( { shortu=> $candidate } );
   is( $url->long_url, $long_url, "Got $long_url back" );
 }
 

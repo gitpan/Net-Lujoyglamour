@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-our $VERSION =   sprintf "%d.%03d", q$Revision: 1.8 $ =~ /(\d+)\.(\d+)/g; 
+our $VERSION =   sprintf "%d.%03d", q$Revision: 1.10 $ =~ /(\d+)\.(\d+)/g; 
 
 use lib qw( ../../../lib ../../lib 
  /home/jmerelo/proyectos/CPAN/Net-Lujoyglamour/lib/); #Just in case we are testing it in-place
@@ -64,10 +64,13 @@ sub get_url {
     my $tmpl = $self->load_tmpl;
     my $long_url  = $self->query->param('longurl');
     my $short_url  = $self->query->param('shorturl');
-    my $new_short_url;
+    my $new_short_url = '';
     eval {
 	$new_short_url = $self->schema->create_new_short( $long_url, $short_url );
     };
+    if ( $@ ) {
+	croak "Error when retrieving short URL: $@";
+    }
     my $format = $self->query->param('fmt') || '';
     if ( $format eq '' ) {
 	if ($new_short_url ne '') {
@@ -80,8 +83,8 @@ sub get_url {
     } elsif ( $format eq 'JSON' ) {
 	my $json;
 	if ($new_short_url ne '') {
-	    $json = to_json( { short =>  $self->param('domain')."/".$new_short_url,
-			       long => $long_url} );
+	    $json = to_json( { shortu =>  $self->param('domain')."/".$new_short_url,
+			       longu => $long_url} );
 	} else {
 	    $json = to_json( {msg => $@} );
 	}
@@ -96,7 +99,7 @@ sub get_url {
 sub redirect_url {
     my $self   = shift;
     my $url    = $self->query->param('url');
-    my $long_url = $self->schema->resultset('Url')->single({short => $url});
+    my $long_url = $self->schema->resultset('Url')->single({shortu => $url});
     if ( $long_url ) {
 	return $self->redirect("http://".$long_url->long_url );
     } else {

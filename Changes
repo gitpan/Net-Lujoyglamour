@@ -1,3 +1,11 @@
+2010-10-04  Juan J. Merelo  <jmerelo@sheldon>
+
+	* t/02-webapp-run.t: Fixed test problem when random dir ended with "t", thanks to Sebastian Woetzel
+
+2010-10-03  Juan J. Merelo  <jmerelo@sheldon>
+
+	* lib/Net/Lujoyglamour.pm: Added mysql compatibility, and mysql test.
+
 2010-09-28  Juan J. Merelo  <jmerelo@sheldon>
 
 	* lib/Net/Lujoyglamour.pm: Added more tests for correctly loaded templates

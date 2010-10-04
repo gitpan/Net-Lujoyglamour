@@ -16,7 +16,7 @@ $schema->deploy({ add_drop_tables => 1});
 
 my $this_dir = $ENV{'PWD'};
 my $template_dir;
-if ( ($this_dir =~ /t$/) || ($this_dir =~ m{/t/$})  ) {
+if ( ($this_dir =~ m{/t$}) || ($this_dir =~ m{/t/$})  ) {
     $template_dir = $this_dir;
 } else {
     $template_dir= "$this_dir/t";
@@ -40,7 +40,11 @@ my $short_link = $links[0]->url;
 $mech->content_contains("http://$long_URL", "Long URL shortened to $short_link");
 $mech->get_ok("?rm=geturl&longurl=$long_URL");
 $mech->content_contains($short_link, "Retrieved same short URL");
-my $u = 'v';
+my $u='a';
+my ($short_link_path) = ($short_link =~ m{/(\w+)$});
+while ($u eq $short_link_path) {
+    $u++;
+}
 $mech->get_ok("?rm=geturl&longurl=very.long.url.here.is&shorturl=$u");
 $mech->content_contains("http://$domain/$u", "Retrieved very short URL");
 
