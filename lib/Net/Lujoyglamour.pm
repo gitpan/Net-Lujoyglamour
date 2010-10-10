@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-use version; our $VERSION = qv('0.0.4.1.9'); # 1 == l 9==g
+use version; our $VERSION = qv('0.0.5.1.9'); # 1 == l 9==g
 
 use base qw/DBIx::Class::Schema Exporter/;
 
@@ -88,7 +88,7 @@ Net::Lujoyglamour - Create short URLs with luxury and glamour
 
 =head1 VERSION
 
-This document describes Net::Lujoyglamour version 0.0.4.1.9
+This document describes Net::Lujoyglamour version 0.0.5.1.9
 
 =head1 SYNOPSIS
 

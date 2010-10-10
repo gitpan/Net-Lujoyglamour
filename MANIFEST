@@ -13,7 +13,7 @@ t/02-webapp-run.t
 t/form.html
 t/geturl.html
 t/redirect.html
-t/Lujoyglamour.net
+t/Lujoyglamournet.pdf
 app/lg-deploy
 app/lg.cgi
 app/form.html

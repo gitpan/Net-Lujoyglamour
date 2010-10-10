@@ -3,6 +3,7 @@
 	* lib/Net/Lujoyglamour.pm (generate_candidate_url): Mainly doc
 	changes, and inclusion of the novel file for the 0.0.4.1.9 ==
 	0.0.4.l.g (luxury and glamour) version of the module.
+	Changed to g.l (9.1) after failing to include the PDF in the file...
 
 2010-10-04  Juan J. Merelo  <jmerelo@sheldon>
 
