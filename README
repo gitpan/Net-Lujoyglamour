@@ -1,10 +1,16 @@
-Net-Lujoyglamour version 0.0.2
+Net-Lujoyglamour version 0.0.4lg
 
 If you happen to be at the same time a CPAN and a novel author, and
 the novel happens to be called a CPAN-module-name-able title, it's a
 slam dunk to write a module that is called more or less like the
 novel. If the module can help promoting the novel, so much the
 better. 
+
+Version 0.0.4lg includes the whole novel, which has a cc-by-nc-sa
+licence, in the t/ directory. Get your favorite PDF viewer to read
+it. Unfortunately, it's in Spanish, but if you're interested in
+translating it, feel free, what the hell, it's CC (but please tell me
+just in case I need to coordinate translators)
 
 INSTALLATION
 
@@ -15,6 +21,8 @@ To install this module, run the following commands:
 	make test
 	make install
 
+Then, probably
+evince|acrobat t/Lujoyglamournet.pdf
 
 
 DEPENDENCIES
@@ -28,4 +36,5 @@ COPYRIGHT AND LICENCE
 Copyright (C) 2009, 2010 JJ Merelo
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+it under the same terms as Perl itself. The novel included has a
+cc-by-nc-sa licence

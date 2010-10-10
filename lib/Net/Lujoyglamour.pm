@@ -4,12 +4,12 @@ use warnings;
 use strict;
 use Carp;
 
-use version; our $VERSION = qv('0.0.4');
+use version; our $VERSION = qv('0.0.4.1.9'); # 1 == l 9==g
 
 use base qw/DBIx::Class::Schema Exporter/;
 
 use String::Random qw(random_regex);
-use Regexp::Common;
+use Regexp::Common; # for %RE
 
 our @EXPORT_OK = qw(is_valid);
 
@@ -88,7 +88,7 @@ Net::Lujoyglamour - Create short URLs with luxury and glamour
 
 =head1 VERSION
 
-This document describes Net::Lujoyglamour version 0.0.4
+This document describes Net::Lujoyglamour version 0.0.4.1.9
 
 =head1 SYNOPSIS
 
@@ -115,6 +115,11 @@ Model/Control part of a framework intended for creating short
     wrote (and obtained a literary price), and you can check out at
     L<http://lujoyglamour.es> or buy at
     L<http://compra.lujoyglamour.net>. 
+
+The module has been tested with SQLite and MySQL, and is in fact
+    running using both. You just need to change the C<$dsn> for using
+    either. It hasn't been tested using other databases; would be
+    grateful if anybody tried/patched for these.
 
 =head1 INTERFACE 
     
@@ -154,7 +159,7 @@ You already used up all available short addresses. Time to expand your
 
 =item C<< Invalid short URL $want_short >>
 
-Requested URL invalid
+The requested URL is invalid
 
 =back
 
@@ -162,18 +167,26 @@ Requested URL invalid
 =head1 CONFIGURATION AND ENVIRONMENT
 
 You need to have a database system ready and able. If there's none
-    installed, SQLite will do nicely. 
+    installed, SQLite will do nicely, but do check reading/writing
+    permissions over the file. Use the C<app/lg-deploy> script,
+    modified for your environment, to create the initial environment. 
 
+There are some template and CGI examples under the C<app/> directory of the
+    distribution. Check them for usage, or use your own. You only need
+    to keep the filenames of the C<.html> files and copy them in the
+    same directory as the CGI. A C<htaccess> file is also provided as
+    an example; you will have to modify it with the actual file names
+    you will be using. 
 
 =head1 DEPENDENCIES
 
-L<DBIx::Class>, L<String::Random> and drivers for database system. 
-
+L<DBIx::Class>, L<String::Random>, L<Regexp::Common> and drivers for
+    database system. If you want to use the provided WebApp, you will
+    need L<CGI::Application> and corresponding drivers.
 
 =head1 INCOMPATIBILITIES
 
 None reported.
-
 
 =head1 BUGS AND LIMITATIONS
 
@@ -189,7 +202,7 @@ L<http://rt.cpan.org>.
 The module is used with a SQLite database at the site
     L<http://lugl.info/>, and with MySQL at L<http://l-g.me> (in
     Spanish). Any comments and suggestions are welcome. If you decide
-    to run your URL shortener on this, please let me know
+    to run your URL shortener on this, please let me know.
 
 Other URL shortening modules you might want to check out are
 L<CGI::Shorten>, L<WWW::Shorten::MakeAShorterLink> and L<WWW::Shorten>, which is rather an interface for
@@ -197,6 +210,12 @@ available URL shortening services.
 
 There is an example app at the aptly named C< app > directory,
     retrieve it from your CPAN directory or from the CPAN website.
+
+This version includes the PDF of the novel lujoyglamour.net,
+    distributed with a CC licence, in Spanish. Look under the C<t/>
+    directory, and read it using your favorite PDF browser or ebook
+    reader. If you publish a review, please trackback
+    L<http://lujoyglamour.es> .
 
 =head1 ACKNOWLEDGEMENTS
 
