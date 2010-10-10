@@ -4,7 +4,8 @@ use warnings;
 use strict;
 use Carp;
 
-use version; our $VERSION = qv('0.0.5.1.9'); # 1 == l 9==g
+# 1 == l 9==g Double luxury and glamour
+use version; our $VERSION = qv('0.0.5.1.9.1.9'); 
 
 use base qw/DBIx::Class::Schema Exporter/;
 
