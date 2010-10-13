@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-our $VERSION =   sprintf "%d.%03d", q$Revision: 1.10 $ =~ /(\d+)\.(\d+)/g; 
+our $VERSION =   sprintf "%d.%03d", q$Revision: 1.11 $ =~ /(\d+)\.(\d+)/g; 
 
 use lib qw( ../../../lib ../../lib 
  /home/jmerelo/proyectos/CPAN/Net-Lujoyglamour/lib/); #Just in case we are testing it in-place
@@ -92,16 +92,14 @@ sub get_url {
 	return $json;
     }
     
-
-
 }
 
 sub redirect_url {
     my $self   = shift;
-    my $url    = $self->query->param('url');
-    my $long_url = $self->schema->resultset('Url')->single({shortu => $url});
+    my $url = $self->param('url');
+    my $long_url =  $self->schema->get_long_for( $url );
     if ( $long_url ) {
-	return $self->redirect("http://".$long_url->long_url );
+	return $self->redirect("http://".$long_url );
     } else {
 	my $tmpl = $self->load_tmpl;
 	$tmpl->param( domain => $self->param('domain'),

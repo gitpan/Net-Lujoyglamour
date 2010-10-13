@@ -47,7 +47,7 @@ for (1..100) {
       $candidate = $schema->generate_candidate_url
   } while $used_urls{$candidate};
   $used_urls{$candidate} = 1;
-  like( $candidate, qr/[$Net::Lujoyglamour::valid_short_urls]+/, "Candidate $candidate OK" );
+  like( $candidate, qr/[$Net::Lujoyglamour::valid_short_urls]+/, "$_ Candidate $candidate OK" );
   my $long_url = "this.is.a.long.url/".rand(1e6);
   $new_url =  $rs_url->new({ shortu=> $candidate,
 			       longu => $long_url});
@@ -61,16 +61,24 @@ for (1..100 ) {
   my $long_url = "this.is.a.long.url/".rand(1e6);
   $short_url = $schema->create_new_short( $long_url );
   like( $short_url, qr/[$Net::Lujoyglamour::valid_short_urls]+/, "Generated $short_url for $long_url OK" );
+  my $this_long_url = $schema->get_long_for( $short_url );
+  is( "http://$long_url", $this_long_url, "$_ Retrieved original" );
 }
 
-my @real_urls = ( "http://lujoyglamour.tumblr.com/post/237071159/pjorge-muy-interesante-y-divertido-lujoyglamour-net",
+my @real_urls = (  "http://www.youtube.com/user/BubokVideos#p/u/6/l6cwGkW3vfs",
+"http://lujoyglamour.tumblr.com/post/237071159/pjorge-muy-interesante-y-divertido-lujoyglamour-net",
 		  "http://hardware.slashdot.org/story/10/01/15/028201/Robotics-Prof-Fears-Rise-of-Military-Robots?art_pos=3",
-		  "http://www.lujoyglamour.es/2010/01/15/unos-cuantos-libros/" );
+		  "http://www.lujoyglamour.es/2010/01/15/unos-cuantos-libros/",
+    "http://search.twitter.com/search?q=lujoyglamour.net"
+    );
 
 for my $r (@real_urls) {
    $short_url = $schema->create_new_short( $r );
    is( $short_url ne '', 1 , "Getting $short_url for $r");
+   my $this_long_url = $schema->get_long_for( $short_url );
+   is( $r, $this_long_url, "Retrieved original $r" );
 }
+
 my @wanted = qw( this going what like );
 for my $w (@wanted ) {
   my $long_url = "this.is.a.longer.url/".rand(1e6);

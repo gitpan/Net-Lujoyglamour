@@ -5,7 +5,7 @@ use strict;
 use Carp;
 
 # 1 == l 9==g Double luxury and glamour
-use version; our $VERSION = qv('0.0.5.1.9.1.9'); 
+use version; our $VERSION = qv('0.0.6.1.9'); 
 
 use base qw/DBIx::Class::Schema Exporter/;
 
@@ -23,16 +23,20 @@ __PACKAGE__->load_namespaces();
 sub create_new_short {
     my $schema = shift;
     my $long_url = shift || croak "What? No URL?\n";
-    if ( $long_url =~ m{^http://(.+)} ) {
-      $long_url = $1;
+    if ( $long_url !~ m{^http://} ) {
+	$long_url = "http://$long_url";
     }
-    croak "Invalid URL $long_url" if ( "http://$long_url" !~ /$RE{'URI'}{'HTTP'}/ );
+    if ( $long_url =~ m{($RE{'URI'}{'HTTP'}#?[/\w]*)} ) {
+      $long_url = $1;
+    } else {
+	croak "Invalid URL $long_url" ;
+    }
     my $want_short = shift;
     my $url_rs = $schema->resultset('Url');
     
     if ( $want_short ) { 
 	my $is_there_long = $url_rs->single( { shortu => $want_short } );
-	croak "Short URL $want_short already in use" if $is_there_long;
+	croak "Short URL '$want_short' already in use" if $is_there_long;
     }
     my $short_url = $url_rs->single( { longu => $long_url } );
     if ( !$short_url ) { # Doesn't exist, create
@@ -79,6 +83,17 @@ sub generate_candidate_url {
     return $candidate_url;
 }
 
+sub get_long_for {
+    my $schema = shift;
+    my $short_url = shift;
+    my $result =  $schema->resultset('Url')->single({shortu => $short_url});
+    if ( defined $result ) {
+	return $result->long_url;
+    } else {
+	return;
+    }
+}
+    
 "lujo and glamour all over"; # Magic true value required at end of module
 
 __END__
@@ -147,6 +162,10 @@ Generates a random URL with the character limitation set. It checks
 
 Creates and inserts into the database a new short URL, optionally
     using a requested short URL. 
+
+=head2 get_long_for ( $short_url )
+
+Returns the long URL that corresponds to the short one
 
 =head1 DIAGNOSTICS
 

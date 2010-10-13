@@ -1,3 +1,8 @@
+2010-10-13  Juan J. Merelo  <jmerelo@sheldon>
+
+	* lib/Net/Lujoyglamour.pm: 0.0.6 adds more tests, some URLs were not working. 
+	(get_long_for): Added this to API and added "hashed" URLs to set 
+
 2010-10-10  Juan J. Merelo  <jmerelo@sheldon>
 
 	* lib/Net/Lujoyglamour.pm (generate_candidate_url): Mainly doc
